@@ -23,7 +23,6 @@ export class LoginUC {
                 throw new Error("Invalid email");
             }
 
-            console.log(input.password, user.getPassword())
             const isPasswordCorrect = await bcrypt.compare(input.password, user.getPassword());
 
             if (!isPasswordCorrect) {

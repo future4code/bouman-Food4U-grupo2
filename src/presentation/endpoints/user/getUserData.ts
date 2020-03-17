@@ -1,8 +1,8 @@
 require('dotenv').config();
 import { Request, Response } from "express";
-import { LoginUC } from "../../business/usecases/user/login";
-import { UserDB } from "../../data/userDB";
-import { GetUserDataUC } from "../../business/usecases/user/getUserData";
+import { LoginUC } from "../../../business/usecases/user/login";
+import { UserDB } from "../../../data/userDB";
+import { GetUserDataUC } from "../../../business/usecases/user/getUserData";
 import * as jwt from "jsonwebtoken";
 
 export const getUserDataEndpoint = async (req: Request, res: Response) => {

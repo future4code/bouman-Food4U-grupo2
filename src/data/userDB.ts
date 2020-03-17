@@ -38,4 +38,11 @@ export class UserDB extends BaseDB implements UserGateway {
     return new User(result[0][0].id, result[0][0].email, result[0][0].password);
   }
 
+  public async createUserFollowRelation(followerId: string, followedId:string): Promise<void> {
+    await this.connection.raw(`INSERT INTO followers (follower_id, followed_id) 
+    VALUES(
+      '${followerId}',
+      '${followedId}');
+      `);
+  }
 }
