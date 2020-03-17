@@ -20,7 +20,7 @@ export class GetUserDataUC {
  
   }catch(err){
     console.log(err)
-    throw new Error("Erro ao cadastrar usuário")
+    throw new Error("Erro ao pegar usuário")
   }
 }
 }
