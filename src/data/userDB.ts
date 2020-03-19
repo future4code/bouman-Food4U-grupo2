@@ -42,11 +42,42 @@ export class UserDB extends BaseDB implements UserGateway {
   }
 
   public async createUserFollowRelation(followerId: string, followedId: string): Promise<void> {
-    await this.connection.raw(`INSERT INTO followers (follower_id, followed_id) 
+    await this.connection.raw(
+    `INSERT INTO followers (follower_id, followed_id) 
     VALUES(
       '${followerId}',
       '${followedId}');
-      `);
+    `);
+
+    const recipesResult = await this.connection.raw(
+    `SELECT recipes.*, users.email, users.name 
+    FROM recipes
+    JOIN users on users.id = recipes.userId
+    WHERE userId= '${followedId}';`)
+
+    const promisesArray = recipesResult[0].map(async (recipe:any) => {
+      return await this.connection.raw(
+        `INSERT INTO recipes_feed
+        (userId,
+        recipeId,
+        title,
+        description,
+        creationDate,
+        authorEmail,
+        authorName,
+        authorId)
+        VALUES
+        ('${followerId}',
+        '${recipe.id}',
+        '${recipe.title}',
+        '${recipe.description}',
+        '${recipe.creationDate.toISOString().slice(0, 19).replace('T', ' ')}',
+        '${recipe.email}',
+        '${recipe.name}',
+        '${recipe.userId}');`) 
+    })
+
+    await Promise.all(promisesArray)
   }
 
   // precisa do token do auth ( usuario precisa estar logado)
