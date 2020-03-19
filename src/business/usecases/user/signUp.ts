@@ -21,7 +21,7 @@ export class SignupUC {
       const saltOrRounds = 10;
   
       const hashPassword = await bcrypt.hash(input.password, saltOrRounds )
-      const newUser = new User(id, input.email, hashPassword)
+      const newUser = new User(id, input.email, hashPassword, input.name, input.birthDate)
   
       await this.userGateway.createUser(newUser);
   
@@ -38,7 +38,9 @@ export class SignupUC {
 
 export interface SignupUCInput {
   email: string;
-  password: string
+  password: string;
+  name: string;
+  birthDate: Date
 }
 
 export interface SignupUCOutput {

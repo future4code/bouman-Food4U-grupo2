@@ -2,9 +2,10 @@ export class User {
   constructor(
     private id: string,
     private email: string,
-    private password: string
+    private password: string,
+    private name: string,
+    private birthDate: Date
   ) { }
-
 
   public getId(): string {
     return this.id;
@@ -28,5 +29,21 @@ export class User {
 
   public setPassword(password: string): void {
     this.password = password;
+  }
+  
+  public getName(): string {
+    return this.name
+  }
+
+  public setName(name: string): void {
+    this.name = name;
+  }
+
+  public getBirtDate(): Date {
+    return this.birthDate
+  }
+
+  public setBirtDate(birthDate: Date): void {
+    this.birthDate = birthDate;
   }
 }
