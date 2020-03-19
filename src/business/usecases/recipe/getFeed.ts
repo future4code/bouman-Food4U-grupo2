@@ -13,10 +13,10 @@ export class GetFeedUC {
           description: recipe.getDescription(),
           creationDate: recipe.getCreationDate().getTime(),
           userId: recipe.getUserId(),
-          email: recipe.getEmail()
+          userEmail: recipe.getEmail(),
+          userName: recipe.getUserName()
         }
       });
-
     } catch (err) {
       console.log(err)
       throw new Error("Erro ao pegar receitas de seguidores")
@@ -34,5 +34,6 @@ export interface GetFeedUCOutput {
   description: string,
   creationDate: Number,
   userId: string,
-  email: string
+  userEmail: string,
+  userName: string
 }
