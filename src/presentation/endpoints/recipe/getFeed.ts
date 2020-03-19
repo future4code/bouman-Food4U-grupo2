@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { RecipeDB } from "../../../data/recipeDB";
-import { GetRecipesByFollowerUC } from "../../../business/usecases/recipe/getRecipesByFollower";
+import { GetFeedUC } from "../../../business/usecases/recipe/getFeed";
 
-export const getRecipesByFollowerEndpoint = async (req: Request, res: Response) => {
+export const getFeedEndpoint = async (req: Request, res: Response) => {
     try {
       const token = jwt.verify(req.headers.auth as string, process.env.JWT_KEY as string) as {userId: string}
 
-      const getRecipesByFollowerUC = new GetRecipesByFollowerUC(new RecipeDB);
+      const getFeedUC = new GetFeedUC(new RecipeDB);
 
-      const result = await getRecipesByFollowerUC.execute({
+      const result = await getFeedUC.execute({
         userId: token.userId
       });
       res.status(200).send(result);

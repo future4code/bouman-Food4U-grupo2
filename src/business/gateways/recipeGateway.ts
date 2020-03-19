@@ -1,6 +1,7 @@
 import { Recipe } from "../entities/recipe";
+import { RecipeFeed } from "../entities/recipeFeed";
 
 export interface RecipeGateway {
     createRecipe(recipe: Recipe): Promise<void>
-    getRecipesByFollower(userId: string): Promise<Recipe[]>
+    getFeed(userId: string): Promise<RecipeFeed[]>
 }

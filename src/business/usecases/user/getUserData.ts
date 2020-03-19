@@ -7,6 +7,7 @@ export class GetUserDataUC {
   constructor(private userGateway: UserGateway) {}
   public async execute(input: GetUserDataUCInput): Promise<GetUserDataUCOutput | undefined>{
     try{
+      
         const user = await this.userGateway.getUserById(input.userId);
 
         if(!user){
@@ -16,6 +17,8 @@ export class GetUserDataUC {
         return {
             id: user.getId(),
             email: user.getEmail(),
+            name: user.getName(),
+            birthDate: user.getBirtDate().getTime()
         }
  
   }catch(err){
@@ -31,5 +34,7 @@ export interface GetUserDataUCInput {
 
 export interface GetUserDataUCOutput {
     id: string;
-    email: string
+    email: string;
+    name: string;
+    birthDate: Number
 }

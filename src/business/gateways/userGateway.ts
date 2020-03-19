@@ -5,4 +5,5 @@ export interface UserGateway {
     getUserByEmail(email: string): Promise<User | undefined>
     getUserById(id: string): Promise<User | undefined>
     createUserFollowRelation(followerId: string, followedId:string): Promise<void>
+    changePassword(newPassword: string, userId: string): Promise<void> 
 }

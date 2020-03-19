@@ -7,7 +7,9 @@ export const signupEndpoint = async (req: Request, res: Response) => {
       const signupUC = new SignupUC(new UserDB());
       const result = await signupUC.execute({
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        name: req.body.name,
+        birthDate: req.body.birthDate
         
       });
       res.status(200).send(result);
