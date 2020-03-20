@@ -13,6 +13,7 @@ export const followUserEndpoint = async (req: Request, res: Response) => {
       userId: token.userId,
       userToFollowId: req.body.userToFollowId
     });
+    
     res.status(200).send(result);
   } catch (err) {
     res.status(400).send({

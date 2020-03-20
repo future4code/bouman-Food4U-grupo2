@@ -5,7 +5,7 @@ export class User {
     private password: string,
     private name: string,
     private birthDate: Date
-  ) { }
+  ) {}
 
   public getId(): string {
     return this.id;

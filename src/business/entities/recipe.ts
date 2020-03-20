@@ -32,18 +32,18 @@ export class Recipe {
   }
 
   public getCreationDate(): Date {
-      return this.creationDate
+    return this.creationDate
   }
   
   public setCreationDate(creationDate: Date): void {
-      this.creationDate = creationDate;
+    this.creationDate = creationDate;
   }
 
   public getUserId(): string {
-      return this.userId
+    return this.userId
   }
   
   public setUserId(userId: string): void {
-      this.userId = userId;
+    this.userId = userId;
   }
 }
