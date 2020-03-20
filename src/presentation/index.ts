@@ -1,10 +1,10 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import { signupEndpoint } from "./endpoints/user/signUp";
 import { loginEndpoint } from "./endpoints/user/login";
 import { getUserDataEndpoint } from "./endpoints/user/getUserData";
 import { createRecipeEndpoint } from "./endpoints/recipe/createRecipe";
 import { followUserEndpoint } from "./endpoints/user/followUser"
-import { getFeedEndpoint } from "./endpoints/recipe/getFeed";
+import { getFeedEndpoint } from "./endpoints/feed/getFeed";
 import { changePasswordEndpoint } from "./endpoints/user/changePassword";
 
 const app = express();
@@ -16,15 +16,17 @@ app.post('/login', loginEndpoint);
 
 app.get('/user', getUserDataEndpoint);
 
-app.post("/recipes", createRecipeEndpoint);
-
 app.post("/user/follow", followUserEndpoint);
-
-app.get("/feed", getFeedEndpoint);
 
 app.post("/change/password", changePasswordEndpoint);
 
+app.post("/recipes", createRecipeEndpoint);
+
+app.get("/feed", getFeedEndpoint);
+
+
 export default app;
+
 
 //  Desafio 1
 

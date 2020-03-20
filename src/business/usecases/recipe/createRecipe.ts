@@ -5,6 +5,7 @@ import { Recipe } from "../../entities/recipe";
 
 export class CreateRecipeUC {
   constructor(private recipeGateway: RecipeGateway) {}
+  
   public async execute(input: CreateRecipeUCInput): Promise<CreateRecipeUCOutput | undefined>{
     const recipeId = v4()
 

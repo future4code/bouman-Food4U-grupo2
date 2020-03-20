@@ -1,7 +1,9 @@
-import { RecipeGateway } from "../../gateways/recipeGateway";
+import { FeedGateway } from "../../gateways/feedGateway";
+
 
 export class GetFeedUC {
-  constructor(private recipeGateway: RecipeGateway) { }
+  constructor(private recipeGateway: FeedGateway) {}
+  
   public async execute(input: GetFeedUCInput): Promise<GetFeedUCOutput[] | undefined> {
     try {
       const results = await this.recipeGateway.getFeed(input.userId)

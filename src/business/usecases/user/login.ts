@@ -1,56 +1,52 @@
-import { v4 } from "uuid";
-import { User } from "../../entities/user";
 import { UserGateway } from "../../gateways/userGateway";
 import * as bcrypt from 'bcrypt';
 import * as jwt from "jsonwebtoken";
-require('dotenv').config();
+
 
 export class LoginUC {
-    constructor(private userGateway: UserGateway) { }
-    public async execute(input: LoginUCInput): Promise<LoginUCOutput | undefined> {
-        try {
-            const user = await this.userGateway.getUserByEmail(input.email);
+  constructor(private userGateway: UserGateway) {}
 
-            if (!user) {
-                throw new Error("Email incorreto");
-            }
+  public async execute(input: LoginUCInput): Promise<LoginUCOutput | undefined> {
+    try {
+      const user = await this.userGateway.getUserByEmail(input.email);
 
-            if (!input) {
-                return undefined
-            }
+      if (!user) {
+        throw new Error("Email incorreto");
+      }
 
-            if (input.email.indexOf("@") === -1) {
-                throw new Error("Invalid email");
-            }
+      if (!input) {
+        return undefined
+      }
 
-            const isPasswordCorrect = await bcrypt.compare(input.password, user.getPassword());
+      if (input.email.indexOf("@") === -1) {
+        throw new Error("Invalid email");
+      }
 
-            if (!isPasswordCorrect) {
-                throw new Error("Senha incorreta")
-            }
+      const isPasswordCorrect = await bcrypt.compare(input.password, user.getPassword());
 
-            const token = jwt.sign({userId: user.getId()}, process.env.JWT_KEY as string, { expiresIn: '1h' });
+      if (!isPasswordCorrect) {
+        throw new Error("Senha incorreta")
+      }
 
+      const token = jwt.sign({userId: user.getId()}, process.env.JWT_KEY as string, { expiresIn: '1h' });
 
-            return {
-                message: "Usuário logado com sucesso",
-                token: token
-            }
-
-        } catch (err) {
-            console.log(err)
-            throw new Error("Erro ao fazer login")
-        }
-
+      return {
+        message: "Usuário logado com sucesso",
+        token: token
+      }
+    } catch (err) {
+      console.log(err)
+      throw new Error("Erro ao fazer login")
     }
+  }
 }
 
 export interface LoginUCInput {
-    email: string;
-    password: string
+  email: string;
+  password: string
 }
 
 export interface LoginUCOutput {
-    message: string;
-    token: string
+  message: string;
+  token: string
 }
