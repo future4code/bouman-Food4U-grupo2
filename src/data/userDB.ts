@@ -36,7 +36,7 @@ export class UserDB extends BaseDB implements UserGateway {
       `SELECT * FROM ${this.userTableName} WHERE id='${id}'`
     );
 
-    return new User(result[0][0].id, result[0][0].email, result[0][0].password, result[0][0].name, result[0][0].birthDate);
+    return new User(result[0][0].id, result[0][0].email, result[0][0].password, result[0][0].name, result[0][0].birthDate, result[0][0].passwordTime);
   }
 
   public async createUserFollowRelation(followerId: string, followedId: string): Promise<void> {
@@ -52,7 +52,7 @@ export class UserDB extends BaseDB implements UserGateway {
       WHERE userId= '${followedId}';`
     )
 
-    const promisesArray = recipesResult[0].map(async (recipe:any) => {
+    const promisesArray = recipesResult[0].map(async (recipe: any) => {
       return await this.connection.raw(
         `INSERT INTO recipes_feed
         (userId,
@@ -72,7 +72,7 @@ export class UserDB extends BaseDB implements UserGateway {
         '${recipe.email}',
         '${recipe.name}',
         '${recipe.userId}');`
-      ) 
+      )
     })
 
     await Promise.all(promisesArray)
@@ -83,5 +83,40 @@ export class UserDB extends BaseDB implements UserGateway {
       `UPDATE users 
       SET password = '${newPassword}'
       WHERE id = '${userId}';`
-    )}
+    )
+  }
+
+  public async changeName(newName: string, userId: string): Promise<void> {
+    await this.connection.raw(
+      `UPDATE users 
+        SET name = '${newName}'
+        WHERE id = '${userId}';`
+    )
+  }
+
+  public async changeEmail(newEmail: string, userId: string): Promise<void> {
+    await this.connection.raw(
+      `UPDATE users 
+          SET email = '${newEmail}'
+          WHERE id = '${userId}';`
+    )
+  }
+
+  public async changeBirthDate(newBirthDate: Date, userId: string): Promise<void> {
+    await this.connection.raw(
+      `UPDATE users 
+          SET birthDate = '${newBirthDate}'
+          WHERE id = '${userId}';`
+    )
+  }
+
+  public async updatePasswordTime(passwordTime: Date, userId: string): Promise<void> {
+    await this.connection.raw(
+      `UPDATE ${this.userTableName} 
+        SET passwordTime = '${passwordTime.toISOString().slice(0, 19).replace('T', ' ')}'
+         WHERE id = '${userId}';
+      `
+    )
+  }
+
 }

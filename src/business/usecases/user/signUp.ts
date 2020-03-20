@@ -46,6 +46,7 @@ export interface SignupUCInput {
   password: string;
   name: string;
   birthDate: Date
+
 }
 
 export interface SignupUCOutput {
