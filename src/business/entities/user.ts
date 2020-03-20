@@ -4,8 +4,9 @@ export class User {
     private email: string,
     private password: string,
     private name: string,
-    private birthDate: Date
-  ) {}
+    private birthDate: Date,
+    private passwordTime?: Date
+  ) { }
 
   public getId(): string {
     return this.id;
@@ -30,7 +31,7 @@ export class User {
   public setPassword(password: string): void {
     this.password = password;
   }
-  
+
   public getName(): string {
     return this.name
   }
@@ -45,5 +46,13 @@ export class User {
 
   public setBirtDate(birthDate: Date): void {
     this.birthDate = birthDate;
+  }
+
+  public getPasswordTime(): Date | undefined{
+    return this.passwordTime
+  }
+
+  public setPasswordTime(passwordTime: Date): void {
+    this.passwordTime = passwordTime;
   }
 }

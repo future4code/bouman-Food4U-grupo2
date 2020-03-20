@@ -1,6 +1,5 @@
 import { UserGateway } from "../../gateways/userGateway";
 
-
 export class FollowUserUC {
   constructor(private userGateway: UserGateway) {}
   

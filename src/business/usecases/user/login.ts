@@ -28,7 +28,7 @@ export class LoginUC {
         throw new Error("Senha incorreta")
       }
 
-      const token = jwt.sign({userId: user.getId()}, process.env.JWT_KEY as string, { expiresIn: '1h' });
+      const token = jwt.sign({userId: user.getId()}, process.env.JWT_KEY as string, { expiresIn: '2h' });
 
       return {
         message: "Usuário logado com sucesso",

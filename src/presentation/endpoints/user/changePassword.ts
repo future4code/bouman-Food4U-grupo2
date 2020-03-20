@@ -5,6 +5,7 @@ import { ChangePasswordUC } from "../../../business/usecases/user/changePassword
 
 
 export const changePasswordEndpoint = async (req: Request, res: Response) => {
+ 
   try {
     const token = jwt.verify(req.headers.auth as string, process.env.JWT_KEY as string) as {userId: string}  
     
