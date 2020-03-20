@@ -17,12 +17,19 @@ export class RecipeDB extends BaseDB implements RecipeGateway {
 
     const authorId = recipe.getUserId()
 
-    const authorFollowersInfo = await this.connection.raw(
-      `SELECT followers.follower_id, users.email, users.name FROM followers 
-      JOIN users ON users.id=followers.follower_id
-      WHERE follower_id = '${authorId}'`)
+    const FollowerId = await this.connection.raw(
+      `SELECT followers.follower_id 
+      FROM followers 
+      WHERE followed_id = '${authorId}'`
+    )
 
-    const promisesArray = authorFollowersInfo[0].map(async (follower:any) => {
+    const authorData = await this.connection.raw(
+      `SELECT email, name
+      FROM users 
+      WHERE id = '${authorId}';`
+    )
+
+    const promisesArray = FollowerId[0].map(async (follower:any) => {
       return await this.connection.raw(
       `INSERT INTO recipes_feed
       (userId,
@@ -39,8 +46,8 @@ export class RecipeDB extends BaseDB implements RecipeGateway {
       '${recipe.getTitle()}',
       '${recipe.getDescription()}',
       '${recipe.getCreationDate().toISOString().slice(0, 19).replace('T', ' ')}',
-      '${follower.email}',
-      '${follower.name}',
+      '${authorData[0][0].email}',
+      '${authorData[0][0].name}',
       '${recipe.getUserId()}');`
       ) 
     })
